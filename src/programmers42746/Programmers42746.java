@@ -51,25 +51,23 @@ public class Programmers42746 {
 
         @Override
         public int compareTo(Number o) {
-            int convertedOriginValue = convertValue(value);
-            int convertedOtherValue = convertValue(o.getValue());
-            if(convertedOriginValue > convertedOtherValue) {
+            StringBuilder sb = new StringBuilder();
+            sb.append(String.valueOf(value));
+            sb.append(String.valueOf(o.getValue()));
+            String originFirst = sb.toString();
+
+            sb = new StringBuilder();
+            sb.append(String.valueOf(o.getValue()));
+            sb.append(String.valueOf(value));
+            String otherFirst = sb.toString();
+
+            if(Integer.parseInt(originFirst) > Integer.parseInt(otherFirst)) {
                 return -1;
-            } else if(convertedOriginValue < convertedOtherValue) {
+            } else if(Integer.parseInt(originFirst) < Integer.parseInt(otherFirst)) {
                 return 1;
             } else {
                 return 0;
             }
-        }
-
-        private int convertValue(int value) {
-            String valueStr = String.valueOf(value);
-            StringBuilder sb = new StringBuilder();
-
-            for(int i = 0; i < 4; i++) {
-                sb.append(valueStr.charAt(i % valueStr.length()));
-            }
-            return Integer.parseInt(sb.toString());
         }
     }
 }
