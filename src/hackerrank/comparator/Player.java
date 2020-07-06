@@ -27,7 +27,7 @@ class Player{
     }
 }
 
-class Solution {
+class PlayerSolution {
 
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
