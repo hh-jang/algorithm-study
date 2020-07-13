@@ -1,5 +1,8 @@
 package baeck6603;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Scanner;
 
 public class Baeck6603 {
@@ -27,12 +30,26 @@ public class Baeck6603 {
     }
 
     public static void solve(int[] array, int n) {
-
+        boolean[] visited = new boolean[n];
+        combination(array, visited, 0, n, MAX_NUM);
     }
 
-    public static void some(int idx, int[] array) {
-        if(idx >= array.length) return;
-        System.out.println(array[idx]);
-        some(idx++, array);
+    private static void combination(int[] arr, boolean[] visited, int start, int n, int r) {
+        if (r == 0) {
+            for (int i = 0; i < n; i++) {
+                if (visited[i]) {
+                    System.out.print(arr[i] + " ");
+                }
+            }
+            System.out.println();
+            System.out.println();
+            return;
+        }
+
+        for (int i = start; i < n; i++) {
+            visited[i] = true;
+            combination(arr, visited, i + 1, n, r - 1);
+            visited[i] = false;
+        }
     }
 }
