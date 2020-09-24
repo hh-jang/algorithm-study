@@ -1,51 +1,81 @@
 package leetcode.addtwonumbers;
 
-import java.util.Arrays;
-
 public class AddTwoNumbers {
+//    Input: (2 -> 4 -> 3) + (5 -> 6 -> 4)
+//    Output: 7 -> 0 -> 8
+//    Explanation: 342 + 465 = 807.
     public static void main(String[] args) {
-        int[] array1 = {9};
-        int[] array2 = {1,9,9,9,9,9,9,9,9,9};
+//        int[] array1 = {9};
+//        int[] array2 = {1,9,9,9,9,9,9,9,9,9};
+//
+//        ListNode head = new ListNode();
+//        for(int i = 0; i < array1.length; i++) {
+//            int value = array1[i];
+//            ListNode newNode = new ListNode(value);
+//            head.next = newNode;
+//            head = newNode;
+//        }
 
-        ListNode head = new ListNode();
-        for(int i = 0; i < array1.length; i++) {
-            int value = array1[i];
-            ListNode newNode = new ListNode(value);
-            head.next = newNode;
-            head = newNode;
-        }
+        ListNode firstLinkedList1 = makeLinkedList(new int[]{9});
+        ListNode secondLinkedList1 = makeLinkedList(new int[]{1,9,9,9,9,9,9,9,9,9});
 
-        ListNode firstLinkedList3 = new ListNode(3);
-        ListNode firstLinkedList2 = new ListNode(4, firstLinkedList3);
-        ListNode firstLinkedList1 = new ListNode(2, firstLinkedList2);
-
-        ListNode secondLinkedList3 = new ListNode(4);
-        ListNode secondLinkedList2 = new ListNode(6, secondLinkedList3);
-        ListNode secondLinkedList1 = new ListNode(5, secondLinkedList2);
-
-        ListNode result = addTwoNumbers(firstLinkedList1, secondLinkedList1);
-        ListNode head = result;
+        ListNode head = addTwoNumbers(firstLinkedList1, secondLinkedList1);
         while (head != null) {
             System.out.println(head.val);
             head = head.next;
         }
     }
 
+    public static ListNode makeLinkedList(int[] array) {
+        ListNode head = new ListNode();
+        ListNode cursor = head;
+        for(int value : array) {
+            ListNode newNode = new ListNode(value);
+            cursor.next = newNode;
+            cursor = newNode;
+        }
+
+        return head.next;
+    }
+
+    public static String getReversedAddedTwoNumbers(ListNode l1, ListNode l2) {
+        StringBuilder sb = new StringBuilder();
+        ListNode l1Cursor = l1;
+        ListNode l2Cursor = l2;
+        boolean isCeil = false;
+        boolean l1IsTail = false;
+        boolean l2IsTail = false;
+        int currentVal = 0;
+
+        while (!(l1IsTail && l2IsTail)) {
+            int l1CurrentVal = l1IsTail ? 0 : l1Cursor.val;
+            int l2CurrentVal = l2IsTail ? 0 : l2Cursor.val;
+
+            currentVal = l1CurrentVal + l2CurrentVal + (isCeil ? 1 : 0);
+
+            isCeil = currentVal > 9;
+
+            sb.append(currentVal % 10);
+
+            if(l1Cursor.next != null) l1Cursor = l1Cursor.next;
+            else l1IsTail = true;
+            if(l2Cursor.next != null) l2Cursor = l2Cursor.next;
+            else l2IsTail = true;
+        }
+
+        return isCeil ? sb.append(1).toString() : sb.toString();
+    }
+
     public static ListNode addTwoNumbers(ListNode l1, ListNode l2) {
         ListNode resultNode = new ListNode();
         ListNode head = resultNode;
 
-        int firstNumber = getReverseNumbers(l1);
-        int secondNumber = getReverseNumbers(l2);
+        String result = getReversedAddedTwoNumbers(l1, l2);
 
-        int result = firstNumber + secondNumber;
+        resultNode.val = (int) result.charAt(0) - 48;
 
-        StringBuilder sb = new StringBuilder();
-        String resultStr = sb.append(String.valueOf(result)).reverse().toString();
-        resultNode.val = (int) resultStr.charAt(0) - 48;
-
-        for(int i = 1; i < resultStr.length(); i++) {
-            int value = resultStr.charAt(i) - 48;
+        for(int i = 1; i < result.length(); i++) {
+            int value = result.charAt(i) - 48;
             ListNode currentNode = new ListNode(value);
             head.next = currentNode;
             head = currentNode;
@@ -54,17 +84,6 @@ public class AddTwoNumbers {
         return resultNode;
     }
 
-    public static int getReverseNumbers(ListNode node) {
-        StringBuilder sb = new StringBuilder();
-        ListNode head = node;
-
-        do {
-            sb.append(head.val);
-            head = head.next;
-        } while (head != null);
-
-        return Integer.parseInt(sb.reverse().toString());
-    }
 
     public static class ListNode {
         int val;

@@ -21,6 +21,22 @@ public class First {
         return answer;
     }
 
+    public static int solve(String s)
+    {
+        int answer = 1;
+
+        int[][] dp = new int[s.length()][s.length()];
+
+        for(int i = 0; i < s.length(); i++) {
+            dp[i][i] = 1;
+        }
+
+        // if(s.charAt(i) == s.charAt(j) than dp[i][j] = dp[i+1][j-1] + 2;
+        // else dp[i][j] = dp[i+1][j-1];
+
+        return answer;
+    }
+
     public static int getOddPalindrome(int pos, int length, String s) {
         int maxCount = 1;
 
