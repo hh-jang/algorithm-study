@@ -43,7 +43,6 @@ public class LongestSubstringWithAtLeastKRepeatingCharacters {
             }
         }
 
-        int maxLength = 0;
         int currentLength = 0;
 
         for(int i = 0; i < s.length(); i++) {
